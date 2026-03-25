@@ -1,15 +1,26 @@
-#include <QApplication>
-#include "GameWindow.h"
+#include <graphics.h>
 
-int main(int argc, char *argv[])
-{
-    QApplication app(argc, argv);
+struct Character {
+    int x, y;
+    COLORREF color;
+    Character(int _x, int _y, COLORREF c): x(_x), y(_y), color(c) {}
+    void draw() {
+        setfillcolor(color);
+        fillcircle(x, y, 20);
+    }
+};
 
-    // 创建主窗口
-    GameWindow window;
-    window.setWindowTitle("森林冰火人");
-    window.resize(800, 600); // 你可以根据需要调整窗口大小
-    window.show();
+int main() {
+    initgraph(800, 600, SHOWCONSOLE);
+    Character fireboy(200, 500, RED);
+    Character watergirl(600, 500, BLUE);
 
-    return app.exec();
+    cleardevice();
+    fireboy.draw();
+    watergirl.draw();
+
+    // 保留窗口，按任意键退出
+    getch();
+    closegraph();
+    return 0;
 }
